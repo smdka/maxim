@@ -2,10 +2,10 @@ server:
   port: 8888
 spring:
   application:
-    name: config-service
+    name: config-server
   cloud:
     config:
       server:
         git:
-          uri: https://github.com/smdka/maxim_config.git
-          search-paths: {application}
+          uri: https://github.com/smdka/maxim_config
+          search-paths: riders
