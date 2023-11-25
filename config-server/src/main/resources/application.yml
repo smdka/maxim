@@ -7,5 +7,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/smdka/maxim_config.git
-          search-paths: {application}
+          uri: https://github.com/smdka/maxim_config
+          search-paths:
+            - riders
+            - eureka-server
