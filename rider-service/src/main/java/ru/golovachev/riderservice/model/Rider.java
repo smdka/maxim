@@ -18,7 +18,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "riders")
+@Table(name = "riders", schema = "public")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Rider {
     @Id
