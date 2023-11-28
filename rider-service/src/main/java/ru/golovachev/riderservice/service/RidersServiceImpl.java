@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ru.golovachev.riderservice.exception.RiderNotFoundException;
 import ru.golovachev.riderservice.model.Rider;
 import ru.golovachev.riderservice.repository.RidersRepository;
 
@@ -33,7 +34,7 @@ public class RidersServiceImpl implements RidersService {
     @Override
     public Rider findById(UUID id) {
         return repository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new RiderNotFoundException(id.toString()));
     }
 
     @Override
