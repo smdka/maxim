@@ -32,10 +32,10 @@ public class RidersController {
         return service.save(riderDto);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public RiderDto updateRider(@RequestBody @Valid RiderDto riderDto) {
-        return service.save(riderDto);
+    public RiderDto updateRider(@RequestBody @Valid RiderDto riderDto, @PathVariable UUID id) {
+        return service.update(riderDto, id);
     }
 
     @GetMapping

@@ -10,6 +10,8 @@ import java.util.UUID;
 public interface RidersService {
     RiderDto save(RiderDto riderDto);
 
+    RiderDto update(RiderDto riderDto, UUID id);
+
     Collection<RiderDto> findAll();
 
     Page<RiderDto> findAll(Pageable pageable);

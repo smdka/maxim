@@ -31,6 +31,22 @@ public class RidersServiceImpl implements RidersService {
     }
 
     @Override
+    @Transactional
+    public RiderDto update(RiderDto riderDto, UUID id) {
+        return repository.findById(id)
+                .map(rider -> {
+                    rider.setFirstName(riderDto.getFirstName());
+                    rider.setLastName(riderDto.getLastName());
+                    rider.setEmail(riderDto.getEmail());
+                    rider.setPhoneNumber(riderDto.getPhoneNumber());
+                    return repository.save(rider);
+                })
+                .map(RiderMapper.INSTANCE::map)
+                .orElseThrow(() -> new RiderNotFoundException(id.toString()));
+    }
+
+
+    @Override
     public Collection<RiderDto> findAll() {
         return repository.findAll().stream()
                 .map(RiderMapper.INSTANCE::map)
