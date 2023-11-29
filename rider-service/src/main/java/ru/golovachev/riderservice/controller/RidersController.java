@@ -1,5 +1,6 @@
 package ru.golovachev.riderservice.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import ru.golovachev.riderservice.model.Rider;
+import ru.golovachev.riderservice.dto.RiderDto;
 import ru.golovachev.riderservice.service.RidersService;
 
 import java.util.Collection;
@@ -27,31 +28,31 @@ public class RidersController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UUID createRider(@RequestBody Rider rider) {
-        return service.save(rider).getId();
+    public RiderDto createRider(@RequestBody @Valid RiderDto riderDto) {
+        return service.save(riderDto);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public Rider updateRider(@RequestBody Rider rider) {
-        return service.save(rider);
+    public RiderDto updateRider(@RequestBody @Valid RiderDto riderDto) {
+        return service.save(riderDto);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Collection<Rider> getRiders() {
+    public Collection<RiderDto> getRiders() {
         return service.findAll();
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<Rider> getRiders(Pageable pageable) {
+    public Page<RiderDto> getRiders(Pageable pageable) {
         return service.findAll(pageable);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Rider getRiderById(@PathVariable UUID id) {
+    public RiderDto getRiderById(@PathVariable UUID id) {
         return service.findById(id);
     }
 

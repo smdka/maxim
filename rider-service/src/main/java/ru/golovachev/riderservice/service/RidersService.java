@@ -2,19 +2,19 @@ package ru.golovachev.riderservice.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import ru.golovachev.riderservice.model.Rider;
+import ru.golovachev.riderservice.dto.RiderDto;
 
 import java.util.Collection;
 import java.util.UUID;
 
 public interface RidersService {
-    Rider save(Rider rider);
+    RiderDto save(RiderDto riderDto);
 
-    Collection<Rider> findAll();
+    Collection<RiderDto> findAll();
 
-    Page<Rider> findAll(Pageable pageable);
+    Page<RiderDto> findAll(Pageable pageable);
 
-    Rider findById(UUID id);
+    RiderDto findById(UUID id);
 
     void deleteById(UUID id);
 
