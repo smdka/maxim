@@ -3,6 +3,7 @@ package ru.golovachev.riderservice.service;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 import ru.golovachev.riderservice.dto.RiderDto;
 import ru.golovachev.riderservice.model.Rider;
@@ -15,6 +16,10 @@ public interface RiderMapper {
     @Mapping(target = "rating", ignore = true)
     Rider map(RiderDto riderDto);
 
-    @InheritInverseConfiguration
+    @InheritInverseConfiguration(name = "map")
     RiderDto map(Rider rider);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "rating", ignore = true)
+    void updateFromDto(RiderDto riderDto, @MappingTarget Rider rider);
 }

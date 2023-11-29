@@ -35,10 +35,7 @@ public class RidersServiceImpl implements RidersService {
     public RiderDto update(RiderDto riderDto, UUID id) {
         return repository.findById(id)
                 .map(rider -> {
-                    rider.setFirstName(riderDto.getFirstName());
-                    rider.setLastName(riderDto.getLastName());
-                    rider.setEmail(riderDto.getEmail());
-                    rider.setPhoneNumber(riderDto.getPhoneNumber());
+                    RiderMapper.INSTANCE.updateFromDto(riderDto, rider);
                     return repository.save(rider);
                 })
                 .map(RiderMapper.INSTANCE::map)
