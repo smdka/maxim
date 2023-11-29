@@ -14,10 +14,10 @@ public interface RiderMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "rating", ignore = true)
-    Rider map(RiderDto riderDto);
+    Rider toModel(RiderDto riderDto);
 
-    @InheritInverseConfiguration(name = "map")
-    RiderDto map(Rider rider);
+    @InheritInverseConfiguration(name = "toModel")
+    RiderDto toDto(Rider rider);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "rating", ignore = true)

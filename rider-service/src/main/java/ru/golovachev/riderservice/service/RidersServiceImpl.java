@@ -26,8 +26,8 @@ public class RidersServiceImpl implements RidersService {
     @Override
     @Transactional
     public RiderDto save(RiderDto riderDto) {
-        Rider rider = RiderMapper.INSTANCE.map(riderDto);
-        return RiderMapper.INSTANCE.map(repository.save(rider));
+        Rider rider = RiderMapper.INSTANCE.toModel(riderDto);
+        return RiderMapper.INSTANCE.toDto(repository.save(rider));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class RidersServiceImpl implements RidersService {
                     RiderMapper.INSTANCE.updateFromDto(riderDto, rider);
                     return repository.save(rider);
                 })
-                .map(RiderMapper.INSTANCE::map)
+                .map(RiderMapper.INSTANCE::toDto)
                 .orElseThrow(() -> new RiderNotFoundException(id.toString()));
     }
 
@@ -46,14 +46,14 @@ public class RidersServiceImpl implements RidersService {
     @Override
     public Collection<RiderDto> findAll() {
         return repository.findAll().stream()
-                .map(RiderMapper.INSTANCE::map)
+                .map(RiderMapper.INSTANCE::toDto)
                 .collect(toList());
     }
 
     @Override
     public Page<RiderDto> findAll(Pageable pageable) {
         List<RiderDto> riderDtos = repository.findAll(pageable).stream()
-                .map(RiderMapper.INSTANCE::map)
+                .map(RiderMapper.INSTANCE::toDto)
                 .collect(toList());
         return new PageImpl<>(riderDtos);
     }
@@ -61,7 +61,7 @@ public class RidersServiceImpl implements RidersService {
     @Override
     public RiderDto findById(UUID id) {
         return repository.findById(id)
-                .map(RiderMapper.INSTANCE::map)
+                .map(RiderMapper.INSTANCE::toDto)
                 .orElseThrow(() -> new RiderNotFoundException(id.toString()));
     }
 
