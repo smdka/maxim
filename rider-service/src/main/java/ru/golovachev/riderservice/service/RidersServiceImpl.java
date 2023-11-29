@@ -11,7 +11,6 @@ import ru.golovachev.riderservice.exception.RiderNotFoundException;
 import ru.golovachev.riderservice.model.Rider;
 import ru.golovachev.riderservice.repository.RidersRepository;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,14 +39,6 @@ public class RidersServiceImpl implements RidersService {
                 })
                 .map(RiderMapper.INSTANCE::toDto)
                 .orElseThrow(() -> new RiderNotFoundException(id.toString()));
-    }
-
-
-    @Override
-    public Collection<RiderDto> findAll() {
-        return repository.findAll().stream()
-                .map(RiderMapper.INSTANCE::toDto)
-                .collect(toList());
     }
 
     @Override

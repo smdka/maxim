@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.golovachev.riderservice.dto.RiderDto;
 import ru.golovachev.riderservice.service.RidersService;
 
-import java.util.Collection;
 import java.util.UUID;
 
 @RestController
@@ -36,12 +35,6 @@ public class RidersController {
     @ResponseStatus(HttpStatus.OK)
     public RiderDto updateRider(@RequestBody @Valid RiderDto riderDto, @PathVariable UUID id) {
         return service.update(riderDto, id);
-    }
-
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public Collection<RiderDto> getRiders() {
-        return service.findAll();
     }
 
     @GetMapping

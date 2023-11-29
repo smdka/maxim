@@ -4,15 +4,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ru.golovachev.riderservice.dto.RiderDto;
 
-import java.util.Collection;
 import java.util.UUID;
 
 public interface RidersService {
     RiderDto save(RiderDto riderDto);
 
     RiderDto update(RiderDto riderDto, UUID id);
-
-    Collection<RiderDto> findAll();
 
     Page<RiderDto> findAll(Pageable pageable);
 
