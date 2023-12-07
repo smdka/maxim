@@ -5,8 +5,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
-import ru.golovachev.riderservice.dto.RiderDto;
 import ru.golovachev.riderservice.model.Rider;
+import ru.golovachev.riderservice.dto.RiderDto;
 
 @Mapper
 public interface RiderMapper {
