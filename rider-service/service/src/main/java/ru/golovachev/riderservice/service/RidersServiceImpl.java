@@ -25,6 +25,11 @@ public class RidersServiceImpl implements RidersService {
     @Override
     @Transactional
     public RiderDto save(RiderDto riderDto) {
+        String phoneNumber = riderDto.getPhoneNumber();
+        if (repository.existsByPhoneNumber(phoneNumber)) {
+            throw new IllegalArgumentException(String.format("Rider with phone number %s already exists", phoneNumber));
+        }
+
         Rider rider = RiderMapper.INSTANCE.toModel(riderDto);
         return RiderMapper.INSTANCE.toDto(repository.save(rider));
     }

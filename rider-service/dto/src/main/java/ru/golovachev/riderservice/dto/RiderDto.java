@@ -12,7 +12,7 @@ import lombok.Value;
 @Builder
 @JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
 public class RiderDto {
-    @NotBlank(message = "First name can't be null")
+    @NotBlank(message = "First name can't be empty")
     String firstName;
 
     String lastName;

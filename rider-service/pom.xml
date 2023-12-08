@@ -17,6 +17,7 @@
 	<modules>
 		<module>service</module>
 		<module>client</module>
+		<module>dto</module>
 	</modules>
 
 </project>

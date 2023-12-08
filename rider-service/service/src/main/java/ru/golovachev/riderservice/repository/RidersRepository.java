@@ -9,4 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface RidersRepository extends JpaRepository<Rider, UUID>, PagingAndSortingRepository<Rider, UUID> {
+    boolean existsByPhoneNumber(String phoneNumber);
 }
