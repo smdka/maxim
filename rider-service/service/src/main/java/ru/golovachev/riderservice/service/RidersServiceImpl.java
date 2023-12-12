@@ -6,10 +6,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.golovachev.riderservice.dto.RiderDto;
 import ru.golovachev.riderservice.exception.RiderNotFoundException;
 import ru.golovachev.riderservice.model.Rider;
 import ru.golovachev.riderservice.repository.RidersRepository;
+import ru.golovachev.riderservice.dto.RiderDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +25,11 @@ public class RidersServiceImpl implements RidersService {
     @Override
     @Transactional
     public RiderDto save(RiderDto riderDto) {
+        String phoneNumber = riderDto.getPhoneNumber();
+        if (repository.existsByPhoneNumber(phoneNumber)) {
+            throw new IllegalArgumentException(String.format("Rider with phone number %s already exists", phoneNumber));
+        }
+
         Rider rider = RiderMapper.INSTANCE.toModel(riderDto);
         return RiderMapper.INSTANCE.toDto(repository.save(rider));
     }

@@ -29,15 +29,16 @@ public class Rider {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     String firstName;
 
     @Column(name = "last_name")
     String lastName;
 
+    @Column(unique = true)
     String email;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", unique = true, nullable = false)
     String phoneNumber;
 
     Integer rating;
