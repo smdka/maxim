@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package riderservice.service;
+
+import "google/protobuf/empty.proto";
+import "ru/golovachev/riderservice/dto/rider_dto.proto";
+
+option java_multiple_files = false;
+option java_package = "ru.golovachev.riderservice.service";
+
+service RidersService {
+  rpc createRider(CreateRiderRequest) returns (CreateRiderResponse);
+  rpc findRiderById(FindRiderByIdRequest) returns (FindRiderByIdResponse);
+  rpc updateRiderById(UpdateRiderByIdRequest) returns (UpdateRiderByIdResponse);
+  rpc deleteRiderById(DeleteRiderByIdRequest) returns (google.protobuf.Empty);
+}
+
+message CreateRiderRequest {
+   dto.RiderDto riderDto = 1;
+}
+
+message CreateRiderResponse {
+  uint64 id = 1;
+}
+
+message FindRiderByIdRequest {
+  uint64 id = 1;
+}
+
+message FindRiderByIdResponse {
+  dto.RiderDto riderDto = 1;
+}
+
+message UpdateRiderByIdRequest {
+  dto.RiderDto riderDto = 1;
+  uint64 id = 2;
+}
+
+message UpdateRiderByIdResponse {
+  dto.RiderDto riderDto = 1;
+}
+
+message DeleteRiderByIdRequest {
+  uint64 id = 1;
+}
