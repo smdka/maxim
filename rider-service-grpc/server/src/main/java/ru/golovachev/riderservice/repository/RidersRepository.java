@@ -6,5 +6,5 @@ import ru.golovachev.riderservice.model.Rider;
 
 @Repository
 public interface RidersRepository extends JpaRepository<Rider, Long> {
-    boolean existsByPhoneNumber(String phoneNumber);
+    boolean existsByEmailOrPhoneNumber(String email, String phoneNumber);
 }

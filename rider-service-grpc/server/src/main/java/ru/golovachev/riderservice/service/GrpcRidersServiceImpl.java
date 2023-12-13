@@ -25,12 +25,13 @@ public class GrpcRidersServiceImpl extends RidersServiceGrpc.RidersServiceImplBa
     public void createRider(CreateRiderRequest request,
                             StreamObserver<CreateRiderResponse> responseObserver) {
 
-        log.info("Creating new rider");
-
         Rider rider = ProtoRiderMapper.INSTANCE.toModel(request.getRiderDto());
+
         String phoneNumber = rider.getPhoneNumber();
-        if (repository.existsByPhoneNumber(phoneNumber)) {
-            throw new RiderAlreadyExistsException(String.format("Phone number %s is invalid", phoneNumber));
+        String email = rider.getEmail();
+
+        if (repository.existsByEmailOrPhoneNumber(email, phoneNumber)) {
+            throw new RiderAlreadyExistsException("Phone number or email is invalid");
         }
 
         Long id = repository.save(rider).getId();
@@ -52,8 +53,6 @@ public class GrpcRidersServiceImpl extends RidersServiceGrpc.RidersServiceImplBa
 
         long id = request.getId();
 
-        log.info("Finding a rider with id {}", id);
-
         RiderDto foundRiderDto = repository.findById(id)
                 .map(ProtoRiderMapper.INSTANCE::toDto)
                 .orElseThrow(() -> new RiderNotFoundException(id));
@@ -74,8 +73,6 @@ public class GrpcRidersServiceImpl extends RidersServiceGrpc.RidersServiceImplBa
                                 StreamObserver<UpdateRiderByIdResponse> responseObserver) {
 
         long id = request.getId();
-
-        log.info("Updating a rider with id {}", id);
 
         RiderDto updatedRiderDto = repository.findById(id)
                 .map(rider -> {
@@ -101,8 +98,6 @@ public class GrpcRidersServiceImpl extends RidersServiceGrpc.RidersServiceImplBa
                                 StreamObserver<Empty> responseObserver) {
 
         long id = request.getId();
-
-        log.info("Deleting rider with id {}", id);
 
         if (!repository.existsById(id)) {
             throw new RiderNotFoundException(id);
