@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package riderservice.service;
+
+import "google/protobuf/empty.proto";
+import "ru/golovachev/driverservice/dto/new_driver_dto.proto";
+
+option java_multiple_files = false;
+option java_package = "ru.golovachev.driverservice.service";
+
+service DriversService {
+  rpc createDriver(CreateDriverRequest) returns (CreateDriverResponse);
+  rpc findRiderById(FindDriverByIdRequest) returns (FindDriverByIdResponse);
+  rpc updateRiderById(UpdateDriverByIdRequest) returns (UpdateDriverByIdResponse);
+  rpc deleteRiderById(DeleteDriverByIdRequest) returns (google.protobuf.Empty);
+}
+
+message CreateDriverRequest {
+    driverservice.dto.NewDriverDto new_driver_dto = 1;
+}
+
+message CreateDriverResponse {
+  uint64 id = 1;
+}
+
+message FindDriverByIdRequest {
+  uint64 id = 1;
+}
+
+message FindDriverByIdResponse {
+  dto.RiderDto riderDto = 1;
+}
+
+message UpdateDriverByIdRequest {
+  dto.RiderDto riderDto = 1;
+  uint64 id = 2;
+}
+
+message UpdateDriverByIdResponse {
+  dto.RiderDto riderDto = 1;
+}
+
+message DeleteDriverByIdRequest {
+  uint64 id = 1;
+}

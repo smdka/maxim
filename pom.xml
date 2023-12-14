@@ -38,6 +38,7 @@
         <module>config-server</module>
         <module>eureka-server</module>
         <module>rider-service-grpc</module>
+        <module>driver-service-grpc</module>
     </modules>
 
     <dependencyManagement>

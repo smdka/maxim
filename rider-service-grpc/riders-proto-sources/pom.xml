@@ -9,8 +9,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>proto-sources</artifactId>
-    <description>Riders service gRPC sources</description>
+    <artifactId>riders-proto-sources</artifactId>
+    <description>Riders service protobuf sources</description>
 
     <dependencies>
         <dependency>
