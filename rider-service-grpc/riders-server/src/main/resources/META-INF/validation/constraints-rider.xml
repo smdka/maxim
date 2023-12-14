@@ -1,0 +1,9 @@
+<constraint-mappings xmlns="http://jboss.org/xml/ns/javax/validation/mapping" version="1.1">
+    <bean class="ru.golovachev.riderservice.dto.RiderDto">
+        <getter name="email">
+            <constraint annotation="javax.validation.constraints.Email">
+                <message>Invalid email</message>
+            </constraint>
+        </getter>
+    </bean>
+</constraint-mappings>

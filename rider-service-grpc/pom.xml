@@ -12,11 +12,11 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>rider-service-grpc</name>
-    <description>gRPC variant of Riders service</description>
+    <description>Riders service</description>
 
     <modules>
-        <module>proto-sources</module>
-        <module>server</module>
+        <module>riders-proto-sources</module>
+        <module>riders-server</module>
     </modules>
 
 </project>

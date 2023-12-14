@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package driverservice.dto;
+
+import "google/protobuf/timestamp.proto";
+
+option java_package = "ru.golovachev.driverservice.dto";
+option java_multiple_files = true;
+
+message DriverLicense {
+  uint32 license_number = 1;
+  google.protobuf.Timestamp expiration_date = 2;
+  string address = 3;
+}
