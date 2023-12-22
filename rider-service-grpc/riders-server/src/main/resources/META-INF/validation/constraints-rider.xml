@@ -5,5 +5,10 @@
                 <message>Invalid email</message>
             </constraint>
         </getter>
+        <getter name="firstName">
+            <constraint annotation="javax.validation.constraints.NotBlank">
+                <message>First name can't be empty</message>
+            </constraint>
+        </getter>
     </bean>
 </constraint-mappings>

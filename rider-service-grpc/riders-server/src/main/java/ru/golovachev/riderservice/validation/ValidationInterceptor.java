@@ -1,5 +1,6 @@
 package ru.golovachev.riderservice.validation;
 
+import com.google.protobuf.GeneratedMessageV3;
 import io.grpc.ForwardingServerCallListener;
 import io.grpc.Metadata;
 import io.grpc.ServerCall;
@@ -14,15 +15,19 @@ import ru.golovachev.riderservice.service.Riders;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidationException;
-import javax.validation.ValidatorFactory;
 import javax.validation.executable.ExecutableValidator;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
+import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
 @GrpcGlobalServerInterceptor
 public class ValidationInterceptor implements ServerInterceptor {
 
+    private final ExecutableValidator validator = Validation.buildDefaultValidatorFactory().getValidator().forExecutables();
 
     @Override
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> call,
@@ -40,21 +45,23 @@ public class ValidationInterceptor implements ServerInterceptor {
             listener = new ForwardingServerCallListener.SimpleForwardingServerCallListener<>(listener) {
                 @Override
                 public void onMessage(ReqT message) {
-                    ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-                    ExecutableValidator validator = validatorFactory.getValidator().forExecutables();
 
                     RiderDto riderDto = ((Riders.CreateRiderRequest) message).getRiderDto();
 
                     try {
-                        Method method = RiderDto.class.getMethod("getEmail");
-                        Set<ConstraintViolation<RiderDto>> violations = validator.validateReturnValue(riderDto, method, riderDto);
+                        PropertyDescriptor[] propertyDescriptors = Introspector.getBeanInfo(RiderDto.class, GeneratedMessageV3.class).getPropertyDescriptors();
+                        Set<ConstraintViolation<RiderDto>> violations = new HashSet<>();
+                        for (PropertyDescriptor descriptor : propertyDescriptors) {
+                            Method readMethod = descriptor.getReadMethod();
+                            violations.addAll(validator.validateReturnValue(riderDto, readMethod, riderDto));
+                        }
                         if (!violations.isEmpty()) {
                             violations.forEach(v -> log.error("Validation failed for {}: {}", v.getPropertyPath(), v.getMessage()));
                             call.close(Status.INVALID_ARGUMENT, headers);
                         } else {
                             super.onMessage(message);
                         }
-                    } catch (NoSuchMethodException | ValidationException e) {
+                    } catch (ValidationException | IntrospectionException e) {
                         call.close(Status.FAILED_PRECONDITION, headers);
                     }
                 }
